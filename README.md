@@ -1,4 +1,8 @@
-Welcome to your new TanStack Start app!
+# puuid.com
+
+The site index for [puuid.com](https://puuid.com): a landing page that links to every `*.puuid.com` site. Those sites are built from the repos in the [puuid-com](https://github.com/puuid-com) GitHub organization.
+
+This project is a TanStack Start app deployed to Cloudflare Workers. `www.puuid.com` redirects to the apex (see `src/server.ts`).
 
 # Getting Started
 
