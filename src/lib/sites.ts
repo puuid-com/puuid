@@ -75,6 +75,18 @@ export const sites: Array<Site> = [
       'Build layered timelines in the browser and export PNG, SVG or JSON.',
     alias: 'tlmkr.com',
   },
+  {
+    prefix: 'xml',
+    name: 'XML Editor',
+    description:
+      'Edit XML and JSON side by side with a synced structure tree, tabs and diffs.',
+  },
+  {
+    prefix: 'zpl',
+    name: 'ZPL editor',
+    description:
+      'Write Zebra ZPL labels with a live preview, compare versions, export PNG or PDF.',
+  },
 ]
 
 export const ROOT_DOMAIN = 'puuid.com'
