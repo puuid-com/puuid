@@ -3,6 +3,7 @@ import { IconArrowUpRight } from '@tabler/icons-react'
 
 import { ROOT_DOMAIN, repoUrl, siteUrl, sites } from '#/lib/sites'
 import { cn } from '#/lib/utils'
+import { m } from '#/paraglide/messages'
 
 const ROTATE_MS = 4200
 /** How many neighbours to keep mounted on each side of the active row. */
@@ -87,7 +88,7 @@ export function DomainCarousel() {
         onFocus={() => setHovering(true)}
         onBlur={() => setHovering(false)}
       >
-        <h1
+        <span
           className={cn(
             'font-mono leading-[1.05] font-medium tracking-tight',
             // Stacked on phones; one unbroken hostname from `sm` up, sized so
@@ -148,7 +149,7 @@ export function DomainCarousel() {
               stroke={1.75}
             />
           </span>
-        </h1>
+        </span>
       </a>
 
       <div className="min-h-[5.5rem] max-w-xl" aria-live="polite">
@@ -167,7 +168,7 @@ export function DomainCarousel() {
               href={repoUrl(active.repo)}
               className="text-muted-foreground hover:text-foreground font-mono text-xs underline decoration-dotted underline-offset-4 transition-colors"
             >
-              source
+              {m.carousel_source()}
             </a>
           ) : null}
         </div>
@@ -176,7 +177,7 @@ export function DomainCarousel() {
         </p>
       </div>
 
-      <nav aria-label="All sites" className="w-full">
+      <nav aria-label={m.carousel_nav_label()} className="w-full">
         <ul className="flex flex-wrap gap-x-1 gap-y-1">
           {sites.map((site, slot) => {
             const current = slot === activeSlot

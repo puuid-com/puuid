@@ -102,7 +102,7 @@ export const sites: Array<Site> = [
 
 export const ROOT_DOMAIN = 'puuid.com'
 
-export const GITHUB_ORG = 'puuid-com'
+const GITHUB_ORG = 'puuid-com'
 
 export const siteUrl = (site: Site) => `https://${site.prefix}.${ROOT_DOMAIN}`
 

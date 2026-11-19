@@ -1,37 +1,28 @@
 import { createFileRoute } from '@tanstack/react-router'
 
 import { DomainCarousel } from '#/components/domain-carousel'
-import { ROOT_DOMAIN, sites } from '#/lib/sites'
+import { seo } from '#/lib/seo'
+import { sites } from '#/lib/sites'
+import { m } from '#/paraglide/messages'
 
-export const Route = createFileRoute('/')({ component: Home })
+export const Route = createFileRoute('/')({
+  head: () => seo({ path: '/' }),
+  component: Home,
+})
 
 function Home() {
   return (
-    <main className="relative flex min-h-dvh flex-col overflow-hidden">
-      <div
-        aria-hidden
-        className="grid-wash pointer-events-none absolute inset-0 -z-10"
-      />
-
-      <header className="flex items-center justify-between px-6 py-6 font-mono text-xs tracking-tight sm:px-10">
-        <span className="text-foreground">{ROOT_DOMAIN}</span>
-        <span className="text-muted-foreground">{sites.length} sites</span>
-      </header>
-
-      <div className="flex flex-1 items-center px-6 py-10 sm:px-10">
-        <div className="mx-auto w-full max-w-4xl">
-          <DomainCarousel />
-        </div>
-      </div>
-
-      <footer className="text-muted-foreground flex flex-wrap items-center justify-between gap-3 px-6 py-6 font-mono text-xs sm:px-10">
+    <section className="mx-auto flex w-full max-w-5xl flex-1 flex-col justify-center gap-10 px-4 py-16">
+      <h1 className="sr-only">{m.home_title()}</h1>
+      <DomainCarousel />
+      <p className="flex flex-wrap items-center gap-x-4 gap-y-2 font-mono text-xs text-muted-foreground">
+        <span>{m.home_count({ count: sites.length })}</span>
         <span>
           <kbd className="text-foreground">↑</kbd>{' '}
-          <kbd className="text-foreground">↓</kbd> to browse ·{' '}
-          <kbd className="text-foreground">↵</kbd> to open
+          <kbd className="text-foreground">↓</kbd> {m.home_keys()} ·{' '}
+          <kbd className="text-foreground">↵</kbd> {m.home_open()}
         </span>
-        <span>Olivier Deschênes</span>
-      </footer>
-    </main>
+      </p>
+    </section>
   )
 }

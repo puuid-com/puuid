@@ -1,5 +1,7 @@
 import {
   HeadContent,
+  Outlet,
+  ScriptOnce,
   Scripts,
   createRootRouteWithContext,
 } from '@tanstack/react-router'
@@ -8,7 +10,13 @@ import { TanStackDevtools } from '@tanstack/react-devtools'
 
 import TanStackQueryDevtools from '../integrations/tanstack-query/devtools'
 
-import { getLocale } from '#/paraglide/runtime'
+import { SiteFooter } from '#/components/layout/SiteFooter'
+import { SiteHeader } from '#/components/layout/SiteHeader'
+import { seo } from '#/lib/seo'
+import { themeScript } from '#/lib/theme'
+import { m } from '#/paraglide/messages'
+import { getLocale, getTextDirection } from '#/paraglide/runtime'
+import { site } from '#/site'
 
 import appCss from '../styles.css?url'
 
@@ -27,42 +35,33 @@ export const Route = createRootRouteWithContext<MyRouterContext>()({
     }
   },
 
-  head: () => ({
-    meta: [
-      {
-        charSet: 'utf-8',
-      },
-      {
-        name: 'viewport',
-        content: 'width=device-width, initial-scale=1',
-      },
-      {
-        title: 'puuid.com — everything I build',
-      },
-      {
-        name: 'description',
-        content:
-          'An index of the sites running on puuid.com: gas prices, budgets, timelines, room plans, barcodes and more.',
-      },
-      {
-        name: 'color-scheme',
-        content: 'light dark',
-      },
-    ],
-    links: [
-      {
-        rel: 'stylesheet',
-        href: appCss,
-      },
-    ],
-  }),
+  head: () => {
+    // Site-wide defaults; routes override them with their own seo() call.
+    const defaults = seo()
+    return {
+      meta: [
+        { charSet: 'utf-8' },
+        { name: 'viewport', content: 'width=device-width, initial-scale=1' },
+        { name: 'theme-color', content: site.themeColor },
+        ...defaults.meta,
+      ],
+      links: [
+        { rel: 'stylesheet', href: appCss },
+        { rel: 'icon', href: '/favicon.svg', type: 'image/svg+xml' },
+        { rel: 'manifest', href: '/site.webmanifest' },
+      ],
+    }
+  },
   shellComponent: RootDocument,
+  component: RootLayout,
 })
 
 function RootDocument({ children }: { children: React.ReactNode }) {
   return (
-    <html lang={getLocale()}>
+    // The theme script adds `.dark` before hydration.
+    <html lang={getLocale()} dir={getTextDirection()} suppressHydrationWarning>
       <head>
+        <ScriptOnce>{themeScript}</ScriptOnce>
         <HeadContent />
       </head>
       <body>
@@ -82,5 +81,23 @@ function RootDocument({ children }: { children: React.ReactNode }) {
         <Scripts />
       </body>
     </html>
+  )
+}
+
+function RootLayout() {
+  return (
+    <div className="flex min-h-dvh flex-col">
+      <a
+        href="#main"
+        className="sr-only focus:not-sr-only focus:fixed focus:top-2 focus:left-2 focus:z-50 focus:bg-background focus:px-3 focus:py-2 focus:text-sm focus:ring-1 focus:ring-ring"
+      >
+        {m.skip_to_content()}
+      </a>
+      <SiteHeader />
+      <main id="main" className="flex flex-1 flex-col">
+        <Outlet />
+      </main>
+      <SiteFooter />
+    </div>
   )
 }
