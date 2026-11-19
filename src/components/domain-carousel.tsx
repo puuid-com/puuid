@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { IconArrowUpRight } from '@tabler/icons-react'
 
-import { ROOT_DOMAIN, siteUrl, sites } from '#/lib/sites'
+import { ROOT_DOMAIN, repoUrl, siteUrl, sites } from '#/lib/sites'
 import { cn } from '#/lib/utils'
 
 const ROTATE_MS = 4200
@@ -160,6 +160,14 @@ export function DomainCarousel() {
               className="text-muted-foreground hover:text-foreground font-mono text-xs underline decoration-dotted underline-offset-4 transition-colors"
             >
               {active.alias}
+            </a>
+          ) : null}
+          {active.repo ? (
+            <a
+              href={repoUrl(active.repo)}
+              className="text-muted-foreground hover:text-foreground font-mono text-xs underline decoration-dotted underline-offset-4 transition-colors"
+            >
+              source
             </a>
           ) : null}
         </div>

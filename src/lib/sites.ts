@@ -7,6 +7,8 @@ export interface Site {
   description: string
   /** Standalone domain pointing at the same app, when there is one. */
   alias?: string
+  /** Repo name in the puuid-com GitHub organization, when it is public there. */
+  repo?: string
 }
 
 /**
@@ -35,9 +37,17 @@ export const sites: Array<Site> = [
       'Three days of premium-format seat availability across Montréal.',
   },
   {
+    prefix: 'editor',
+    name: 'Editor',
+    description:
+      'Edit XML, JSON, TXT, SQL and ZPL with a synced structure tree, tabs and diffs.',
+    repo: 'editor',
+  },
+  {
     prefix: 'gas',
     name: 'Plein',
     description: 'Real-time gas prices across Québec, nearest to you first.',
+    repo: 'gas',
   },
   {
     prefix: 'list',
@@ -76,10 +86,11 @@ export const sites: Array<Site> = [
     alias: 'tlmkr.com',
   },
   {
-    prefix: 'xml',
-    name: 'XML Editor',
+    prefix: 'url',
+    name: 'URL Decoder',
     description:
-      'Edit XML and JSON side by side with a synced structure tree, tabs and diffs.',
+      'Paste a URL to read its query parameters decoded, edit them, and copy it back.',
+    repo: 'url',
   },
   {
     prefix: 'zpl',
@@ -91,4 +102,9 @@ export const sites: Array<Site> = [
 
 export const ROOT_DOMAIN = 'puuid.com'
 
+export const GITHUB_ORG = 'puuid-com'
+
 export const siteUrl = (site: Site) => `https://${site.prefix}.${ROOT_DOMAIN}`
+
+export const repoUrl = (repo: string) =>
+  `https://github.com/${GITHUB_ORG}/${repo}`
