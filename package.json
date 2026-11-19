@@ -1,6 +1,7 @@
 {
   "name": "puuid",
   "private": true,
+  "version": "0.2.0",
   "type": "module",
   "imports": {
     "#/*": "./src/*"
